@@ -1,0 +1,23 @@
+
+.custom-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-header-text {
+  font-size: 3rem;
+}
+
+.form-custom {
+  margin-top: 10px;
+}
+
+#five-day-container {
+  justify-content: space-between;
+}
+
+
+/* #forecast-container {
+  display: none;
+} */

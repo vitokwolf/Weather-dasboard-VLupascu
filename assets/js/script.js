@@ -140,9 +140,18 @@ function displayCurrentWeather(currentCity) {
                     currentCityHumidity.textContent = humidityValue;
                     currentCityWind.textContent = windSpeedValue;
                     currentCityUV.textContent = uvIndexValue;//Please remember that data is provided only for 12:00 p.m.
+                    // change the color of UV index
+                    if (uvIndexValue < 3) {
+                        currentCityUV.setAttribute("class", "badge badge-success")
+                    } else if (uvIndexValue > 7) {
+                        currentCityUV.setAttribute("class", "badge badge-danger")
+                    } else if (uvIndexValue >= 3 && uvIndexValue <= 7) {
+                        currentCityUV.setAttribute("class", "badge badge-warning")
+                    };
                     currentCityIcon.setAttribute("src", iconUrl);
                     cityDisplayed.innerHTML = currentCity;
                 })
         })
 };
 // End current weather
+

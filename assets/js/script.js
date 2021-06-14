@@ -31,6 +31,14 @@ function formSubmitHandler(event) {
             newBtn.innerHTML = currentCity;
             // append it to history container
             previousSearches.appendChild(newBtn);
+            // show weather upon clicking newly created btn
+            newBtn.setAttribute("value", currentCity);
+            newBtn.onclick = function (event) {
+                var city = $(this).attr("value"); // After setting the attribute, use jQuery to target said attribute. 
+                displayCurrentWeather(city);
+                displayForecast(city);
+            }
+
         };
         // clear search form
         cityInputField.value = "";

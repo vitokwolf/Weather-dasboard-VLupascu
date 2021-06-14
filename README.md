@@ -13,5 +13,5 @@ next 5 days high temperatures and humidity;
 * Live page: https://vitokwolf.github.io/Weather-dasboard-VLupascu/
 * GitHub: https://github.com/vitokwolf/Weather-dasboard-VLupascu
 
-![GitHub Logo](./assets/images/Weather-dashboard-VLupascu.png)
+![GitHub Logo](./assets/images/Weather-dasboard-VLupascu.png)
 

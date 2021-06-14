@@ -35,6 +35,7 @@ function formSubmitHandler(event) {
         // clear search form
         cityInputField.value = "";
         displayCurrentWeather(currentCity);
+        displayForecast(currentCity);
     } else {
         alert('Please Enter a City Name');
     }
@@ -155,3 +156,49 @@ function displayCurrentWeather(currentCity) {
 };
 // End current weather
 
+// Start 5 day forecast
+function displayForecast(currentCity) {
+    // fetch forecast data
+    fetch('https://api.openweathermap.org/data/2.5/forecast?q='
+        + currentCity
+        + '&appid='
+        + apiKey
+        + '&units=imperial'
+    )
+        .then(function (forecastResponse) {
+            return forecastResponse.json();
+        })
+        .then(function (forecastResponse) {
+            console.log(forecastResponse);
+            // initialize an array to save the data we need
+            var dates = [];
+            // itterate thru weather api data and choose what we need
+            for (var i = 0; i < forecastResponse.list.length; i++) {
+                // create a var to use ONLY the data as of 3:00 PM, 
+                var highTemp = forecastResponse.list[i]["dt_txt"].split(" ")[1].split(":")[0] == 15;
+                if (highTemp) {
+                    // populate with weather data from this object
+                    dates.push(forecastResponse.list[i]);
+                }
+            };
+            // console.log(dates);
+
+            // itterate thru newly created array of data as of 3pm, and render the inforamtion in our forecast cards
+            // high temp
+            for (let i = 0; i < dates.length; i++) {
+                var cardTemp = document.getElementsByClassName("forecast-temp");
+                cardTemp[i].innerHTML = Math.round(dates[i].main.temp) + "&#8457;";
+                // humidity
+                var cardHumidity = document.getElementsByClassName("forecast-humidity");
+                cardHumidity[i].innerHTML = dates[i].main.humidity + "%";
+                // icons
+                var cardIcon = document.getElementsByClassName("forecast-icon");
+                var cardIconId = dates[i].weather[0].icon
+                var cardIconUrl = "http://openweathermap.org/img/w/"
+                    + cardIconId
+                    + ".png";
+                cardIcon[i].setAttribute("src", cardIconUrl);
+            }
+        })
+};
+// End 5 day forecast

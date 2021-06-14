@@ -34,6 +34,7 @@ function formSubmitHandler(event) {
         };
         // clear search form
         cityInputField.value = "";
+        // call the functions to show the weather
         displayCurrentWeather(currentCity);
         displayForecast(currentCity);
     } else {
@@ -52,6 +53,12 @@ function searchHistory() {
         newBtn.classList = "btn btn-outline-primary btn-lg btn-block city-btn";
         newBtn.setAttribute("id", "city-" + citiesArray[i])
         newBtn.innerHTML = citiesArray[i];
+        // call the function to render weather for the clicked btn
+        newBtn.onclick = function (event) {
+            var city = event.target.textContent;
+            displayCurrentWeather(city);
+            displayForecast(city);
+        }
     }
 };
 searchHistory();
@@ -88,7 +95,6 @@ function displayDate() {
     var forecastDate5 = $('#date5');
     forecastDate5.text(fiveDay5);
 };
-
 displayDate();
 // End create dates and times across the page
 

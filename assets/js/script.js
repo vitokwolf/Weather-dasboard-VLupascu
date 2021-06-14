@@ -39,6 +39,19 @@ function formSubmitHandler(event) {
 searchField.addEventListener("submit", formSubmitHandler);
 // End search city
 
+// Start render search history
+function searchHistory() {
+    for (var i = 0; i < citiesArray.length; i++) {
+        var newBtn = document.createElement("button");
+        previousSearches.appendChild(newBtn);
+        newBtn.classList = "btn btn-outline-primary btn-lg btn-block city-btn";
+        newBtn.setAttribute("id", "city-" + citiesArray[i])
+        newBtn.innerHTML = citiesArray[i];
+    }
+};
+searchHistory();
+// End render search history
+
 // Start create dates and times across the page
 function displayDate() {
     // header

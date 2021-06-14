@@ -8,6 +8,7 @@ var currentCityHumidity = document.getElementById('current-city-humidity');
 var currentCityWind = document.getElementById('current-city-wind');
 var currentCityUV = document.getElementById('current-city-uv');
 var currentCityIcon = document.getElementById('weather-icon');
+var currentWeatherCondition = document.getElementById('weather-condition');
 var citiesArray = JSON.parse(localStorage.getItem('cities')) || [];
 var apiKey = 'de36f3d17ff255fa1488513e597dbf11';
 // End global variables
@@ -145,8 +146,10 @@ function displayCurrentWeather(currentCity) {
                             var windSpeedValue = weatherResponse.wind.speed;
                             var uvIndexValue = JSON.stringify(uvIndex);
                             var weatherIcon = weatherResponse.weather[0].icon;
+                            var currentWeatherCond = weatherResponse.weather[0].description;
                             var iconUrl = "http://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
                             // Append current weather values to <span> elements within the current weather container
+                            currentWeatherCondition.textContent = currentWeatherCond.toUpperCase();
                             currentCityTemp.textContent = temperatureValue;
                             currentCityHumidity.textContent = humidityValue;
                             currentCityWind.textContent = windSpeedValue;

@@ -17,9 +17,12 @@
 </head>
 
 <body>
-    <!-- start header -->
+    <!-- start header -->    
     <header class="navbar custom-header navbar-expand-lg navbar-dark bg-dark">
-        <h1 class="navbar-brand custom-header-text" href="#">Weather Dashboard</h1>
+        <div class="container">
+            <h1 class="navbar-brand custom-header-text" href="#">Weather Dashboard</h1>
+            <span id="current-date" class="d-flex"></span>
+         </div>
     </header>
     <!-- end header -->
 
@@ -48,9 +51,6 @@
                     </div>
                     <br>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Cras justo odio</li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
-                        <li class="list-group-item">Vestibulum at eros</li>
                     </ul>
                 </div>
             </div>
@@ -62,15 +62,13 @@
                 <!-- Start todays forecast -->
                 <div class="card">
                     <!-- searched city/header -->
-                    <h2 id="current-city-displayed" class="card-header">
-                        Searched City
-                    </h2>
+                    <h2 id="current-city-displayed" class="card-header"></h2>
                     <!-- searched city today's forecast info -->
                     <div class="card-body">
                         <h4 class="card-title">
-                            Current weather conditions for
-                            <span id="currentDay"></span>
+                            Current Weather as of
                         </h4>
+                        <span id="currentDay"></span>
                         <div>
                             <img id="weather-icon" src="">
                         </div>
@@ -93,7 +91,7 @@
 
                 <!-- Start five days forecast -->
                 <div class="card">
-                    <div class="card-header">5 Day Forecast</div>
+                    <div class="card-header five-day-header">5 Day Forecast</div>
                     <div class="row mx-0" id="five-day-container">
 
                         <!-- day 1 -->

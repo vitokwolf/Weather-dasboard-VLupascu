@@ -1,3 +1,4 @@
+// Start global variable
 var cityInputField = document.getElementById('city-input');
 var previousSearches = document.getElementById('history');
 var cityDisplayed = document.getElementById('current-city-displayed');
@@ -9,6 +10,7 @@ var currentCityUV = document.getElementById('current-city-uv');
 var currentCityIcon = document.getElementById('weather-icon');
 var citiesArray = JSON.parse(localStorage.getItem('cities')) || [];
 var apiKey = 'de36f3d17ff255fa1488513e597dbf11';
+// End global variables
 
 // Start search city
 function formSubmitHandler(event) {
@@ -34,17 +36,19 @@ function formSubmitHandler(event) {
             // show weather upon clicking newly created btn
             newBtn.setAttribute("value", currentCity);
             newBtn.onclick = function (event) {
-                var city = $(this).attr("value"); // After setting the attribute, use jQuery to target said attribute. 
+                var city = $(this).attr("value"); // After setting the attribute, use jQuery to target said attribute.
+                // call the functions to show the weather 
                 displayCurrentWeather(city);
                 displayForecast(city);
+                showForecast();
             }
-
         };
         // clear search form
         cityInputField.value = "";
         // call the functions to show the weather
         displayCurrentWeather(currentCity);
         displayForecast(currentCity);
+        showForecast();
     } else {
         alert('Please Enter a City Name');
     }
@@ -55,7 +59,7 @@ searchField.addEventListener("submit", formSubmitHandler);
 
 // Start render search history
 function searchHistory() {
-    for (var i = 0; i < citiesArray.length; i++) {
+    for (let i = 0; i < citiesArray.length; i++) {
         var newBtn = document.createElement("button");
         previousSearches.appendChild(newBtn);
         newBtn.classList = "btn btn-outline-primary btn-lg btn-block city-btn";
@@ -66,10 +70,11 @@ function searchHistory() {
             var city = event.target.textContent;
             displayCurrentWeather(city);
             displayForecast(city);
+            showForecast();
         }
     }
+
 };
-searchHistory();
 // End render search history
 
 // Start create dates and times across the page
@@ -103,7 +108,6 @@ function displayDate() {
     var forecastDate5 = $('#date5');
     forecastDate5.text(fiveDay5);
 };
-displayDate();
 // End create dates and times across the page
 
 // Start Current weather
@@ -187,7 +191,7 @@ function displayForecast(currentCity) {
             // initialize an array to save the data we need
             var dates = [];
             // itterate thru weather api data and choose what we need
-            for (var i = 0; i < forecastResponse.list.length; i++) {
+            for (let i = 0; i < forecastResponse.list.length; i++) {
                 // create a var to use ONLY the data as of 3:00 PM, 
                 var highTemp = forecastResponse.list[i]["dt_txt"].split(" ")[1].split(":")[0] == 15;
                 if (highTemp) {
@@ -216,3 +220,12 @@ function displayForecast(currentCity) {
         })
 };
 // End 5 day forecast
+
+// Show the Weather Forecast
+function showForecast() {
+    document.getElementById("forecast-container").style.display = "inline-block";
+};
+
+// Call functions on reload or open the page
+searchHistory();
+displayDate();

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport">
+    <!-- styling links -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <!-- page title -->
+    <title>Weather Dashboard Lite</title>
+</head>
+
+<body>
+    <!-- start header -->    
+    <header class="navbar custom-header navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <h1 class="navbar-brand custom-header-text" href="#">Weather Dashboard</h1>
+            <span id="current-date" class="d-flex"></span>
+         </div>
+    </header>
+    <!-- end header -->
+
+
+    <main class="container-fluid">
+        <div class="row">
+
+            <!-- Start Left side of the page, search form and history container -->
+            <div class="col-md-4 search-column">
+                <!-- Search form -->
+                <div class="card card-custom">
+                    <h3 class="card-header text-uppercase">Search by City</h3>
+                    <form id="search-form" class="form-inline form-custom">
+                        <div class="form-group mx-sm-3 mb-2">
+                            <input type="city" class="field-custom form-control" id="city-input"
+                                placeholder="City Name HERE">
+                        </div>
+                        <button type="submit" class="btn btn-primary mb-2"><span
+                                class="oi oi-magnifying-glass"></span></button>
+                    </form>
+                </div>
+                <!-- History container -->
+                <div id="history" class="card previous-searches mt-md-5">
+                    <div class="card-header">
+                        Search History
+                    </div>
+                    <br>
+                    <ul class="list-group list-group-flush">
+                    </ul>
+                </div>
+            </div>
+            <!-- End Left side of the page, search form and history container -->
+
+            <!-- Start Right side of page: Searched city's today and future forecast -->
+            <div class="col-md-8" id="forecast-container">
+
+                <!-- Start todays forecast -->
+                <div class="card">
+                    <!-- searched city/header -->
+                    <h2 id="current-city-displayed" class="card-header"></h2>
+                    <!-- searched city today's forecast info -->
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            Current Weather as of
+                        </h4>
+                        <span id="currentDay"></span>
+                        <div>
+                            <img id="weather-icon" src="">
+                        </div>
+                        <p class="card-text"><strong>Temperature: </strong>
+                            <span id="current-city-temp"></span>&#8457;
+                        </p>
+                        <p class="card-text"><strong>Humidity: </strong>
+                            <span id="current-city-humidity"></span>%
+                        </p>
+                        <p class="card-text"><strong>Wind Speed: </strong>
+                            <span id="current-city-wind"></span>MPH
+                        </p>
+                        <p class="card-text"><strong>UV Index: </strong>
+                            <span id="current-city-uv"></span> as of 12:00 PM
+                        </p>
+                    </div>
+                </div>
+                <!-- End todays forecast -->
+                <br>
+
+                <!-- Start five days forecast -->
+                <div class="card">
+                    <div class="card-header five-day-header">5 Day Forecast</div>
+                    <div class="row mx-0" id="five-day-container">
+
+                        <!-- day 1 -->
+                        <div id="five-day-1" class="card text-white bg-secondary mb-2"
+                            style="max-width: 9rem; text-align: center;">
+                            <!-- date container -->
+                            <div id="date1" class="card-header"></div>
+                            <div class="card-body">
+                                <!-- forecast icon -->
+                                <div>
+                                    <img class="forecast-icon" src="">
+                                </div>
+                                <!-- temperature -->
+                                <p class="card-text"><strong>High Temp: </strong>
+                                    <span class="card-text forecast-temp"></span>
+                                </p>
+                                <!-- humidity -->
+                                <p class="card-text"><strong>Humidity: </strong>
+                                    <span class="card-text forecast-humidity"></span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- day 2 -->
+                        <div id="five-day-2" class="card text-white bg-secondary mb-2"
+                            style="max-width: 9rem; text-align: center;">
+                            <div id="date2" class="card-header"></div>
+                            <div class="card-body">
+                                <div>
+                                    <img class="forecast-icon" src="">
+                                </div>
+                                <p class="card-text"><strong>High Temp: </strong>
+                                    <span class="card-text forecast-temp"></span>
+                                </p>
+                                <p class="card-text"><strong>Humidity: </strong>
+                                    <span class="card-text forecast-humidity"></span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- day 3 -->
+                        <div id="five-day-3" class="card text-white bg-secondary mb-2"
+                            style="max-width: 9rem; text-align: center;">
+                            <div id="date3" class="card-header"></div>
+                            <div class="card-body">
+                                <div>
+                                    <img class="forecast-icon" src="">
+                                </div>
+                                <p class="card-text"><strong>High Temp: </strong>
+                                    <span class="card-text forecast-temp"></span>
+                                </p>
+                                <p class="card-text"><strong>Humidity: </strong>
+                                    <span class="card-text forecast-humidity"></span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- day 4 -->
+                        <div id="five-day-4" class="card text-white bg-secondary mb-2"
+                            style="max-width: 9rem; text-align: center;">
+                            <div id="date4" class="card-header"></div>
+                            <div class="card-body">
+                                <div>
+                                    <img class="forecast-icon" src="">
+                                </div>
+                                <p class="card-text"><strong>High Temp: </strong>
+                                    <span class="card-text forecast-temp"></span>
+                                </p>
+                                <p class="card-text"><strong>Humidity: </strong>
+                                    <span class="card-text forecast-humidity"></span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- day 5 -->
+                        <div id="five-day-5" class="card text-white bg-secondary mb-2"
+                            style="max-width: 9rem; text-align: center;">
+                            <div id="date5" class="card-header"></div>
+                            <div class="card-body">
+                                <div>
+                                    <img class="forecast-icon" src="">
+                                </div>
+                                <p class="card-text"><strong>Temp: </strong>
+                                    <span class="card-text forecast-temp"></span>
+                                </p>
+                                <p class="card-text"><strong>Humidity: </strong>
+                                    <span class="card-text forecast-humidity"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End five days forecast -->
+            </div>
+            <!-- End Right side of page: Searched city's today and future forecast -->
+        </div>
+    </main>
+    <!-- dynamic changes links -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+
+</html>

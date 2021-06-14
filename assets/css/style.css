@@ -1,0 +1,48 @@
+/* Start body */
+
+/* End body */
+
+/* Start header */
+.custom-header {
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-header-text {
+  font-size: 3rem;
+}
+
+#current-date{
+  color: aliceblue;
+  font-size: 1.5rem;
+}
+/* End header */
+
+/* Start form */
+.form-custom {
+  margin-top: 10px;
+}
+/* End form */
+
+/* Start today */
+#currentDay {
+  font-size: 1.6rem;
+  color: rgba(0,0,0,0.6);
+}
+/* End today */
+
+/* Start 5 day */
+.five-day-header{
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+#five-day-container {
+  justify-content: space-between;
+}
+
+/* #forecast-container {
+  display: none;
+} */
+/* End 5 day */

@@ -124,52 +124,48 @@ function displayCurrentWeather(currentCity) {
         // check if a known city was entered
         .then(function (weatherResponse) {
             if (weatherResponse.ok) {
-                return weatherResponse.json();
+                weatherResponse.json().then(function (weatherResponse) {
+                    // fetch the uv data
+                    fetch(
+                        'https://api.openweathermap.org/data/2.5/uvi?appid='
+                        + apiKey
+                        + '&lat='
+                        + weatherResponse.coord.lat
+                        + '&lon='
+                        + weatherResponse.coord.lon
+                    )
+                        .then(function (response) {
+                            return response.json();
+                        })
+                        .then(function (response) {
+                            // create variables for each data value we need
+                            var uvIndex = response.value
+                            var temperatureValue = Math.round(weatherResponse.main.feels_like);
+                            var humidityValue = weatherResponse.main.humidity;
+                            var windSpeedValue = weatherResponse.wind.speed;
+                            var uvIndexValue = JSON.stringify(uvIndex);
+                            var weatherIcon = weatherResponse.weather[0].icon;
+                            var iconUrl = "http://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
+                            // Append current weather values to <span> elements within the current weather container
+                            currentCityTemp.textContent = temperatureValue;
+                            currentCityHumidity.textContent = humidityValue;
+                            currentCityWind.textContent = windSpeedValue;
+                            currentCityUV.textContent = uvIndexValue;//Please remember that data is provided only for 12:00 p.m.
+                            // change the color of UV index
+                            if (uvIndexValue < 3) {
+                                currentCityUV.setAttribute("class", "badge badge-success")
+                            } else if (uvIndexValue > 7) {
+                                currentCityUV.setAttribute("class", "badge badge-danger")
+                            } else if (uvIndexValue >= 3 && uvIndexValue <= 7) {
+                                currentCityUV.setAttribute("class", "badge badge-warning")
+                            };
+                            currentCityIcon.setAttribute("src", iconUrl);
+                            cityDisplayed.innerHTML = currentCity;
+                        })
+                })
             } else {
                 alert('Error: City not Found!');
             }
-        })
-        .then(function (weatherResponse) {
-            console.log(weatherResponse);
-            // fetch the uv data
-            fetch(
-                'https://api.openweathermap.org/data/2.5/uvi?appid='
-                + apiKey
-                + '&lat='
-                + weatherResponse.coord.lat
-                + '&lon='
-                + weatherResponse.coord.lon
-            )
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (response) {
-                    console.log(weatherResponse);
-                    console.log(response);
-                    // create variables for each data value we need
-                    var uvIndex = response.value
-                    var temperatureValue = Math.round(weatherResponse.main.feels_like);
-                    var humidityValue = weatherResponse.main.humidity;
-                    var windSpeedValue = weatherResponse.wind.speed;
-                    var uvIndexValue = JSON.stringify(uvIndex);
-                    var weatherIcon = weatherResponse.weather[0].icon;
-                    var iconUrl = "http://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
-                    // Append current weather values to <span> elements within the current weather container
-                    currentCityTemp.textContent = temperatureValue;
-                    currentCityHumidity.textContent = humidityValue;
-                    currentCityWind.textContent = windSpeedValue;
-                    currentCityUV.textContent = uvIndexValue;//Please remember that data is provided only for 12:00 p.m.
-                    // change the color of UV index
-                    if (uvIndexValue < 3) {
-                        currentCityUV.setAttribute("class", "badge badge-success")
-                    } else if (uvIndexValue > 7) {
-                        currentCityUV.setAttribute("class", "badge badge-danger")
-                    } else if (uvIndexValue >= 3 && uvIndexValue <= 7) {
-                        currentCityUV.setAttribute("class", "badge badge-warning")
-                    };
-                    currentCityIcon.setAttribute("src", iconUrl);
-                    cityDisplayed.innerHTML = currentCity;
-                })
         })
 };
 // End current weather
@@ -184,38 +180,40 @@ function displayForecast(currentCity) {
         + '&units=imperial'
     )
         .then(function (forecastResponse) {
-            return forecastResponse.json();
-        })
-        .then(function (forecastResponse) {
-            console.log(forecastResponse);
-            // initialize an array to save the data we need
-            var dates = [];
-            // itterate thru weather api data and choose what we need
-            for (let i = 0; i < forecastResponse.list.length; i++) {
-                // create a var to use ONLY the data as of 3:00 PM, 
-                var highTemp = forecastResponse.list[i]["dt_txt"].split(" ")[1].split(":")[0] == 15;
-                if (highTemp) {
-                    // populate with weather data from this object
-                    dates.push(forecastResponse.list[i]);
-                }
-            };
-            // console.log(dates);
+            if (forecastResponse.ok) {
+                forecastResponse.json().then(function (forecastResponse) {
+                    // initialize an array to save the data we need
+                    var dates = [];
+                    // itterate thru weather api data and choose what we need
+                    for (let i = 0; i < forecastResponse.list.length; i++) {
+                        // create a var to use ONLY the data as of 3:00 PM, 
+                        var highTemp = forecastResponse.list[i]["dt_txt"].split(" ")[1].split(":")[0] == 15;
+                        if (highTemp) {
+                            // populate with weather data from this object
+                            dates.push(forecastResponse.list[i]);
+                        }
+                    };
+                    // console.log(dates);
 
-            // itterate thru newly created array of data as of 3pm, and render the inforamtion in our forecast cards
-            // high temp
-            for (let i = 0; i < dates.length; i++) {
-                var cardTemp = document.getElementsByClassName("forecast-temp");
-                cardTemp[i].innerHTML = Math.round(dates[i].main.temp) + "&#8457;";
-                // humidity
-                var cardHumidity = document.getElementsByClassName("forecast-humidity");
-                cardHumidity[i].innerHTML = dates[i].main.humidity + "%";
-                // icons
-                var cardIcon = document.getElementsByClassName("forecast-icon");
-                var cardIconId = dates[i].weather[0].icon
-                var cardIconUrl = "http://openweathermap.org/img/w/"
-                    + cardIconId
-                    + ".png";
-                cardIcon[i].setAttribute("src", cardIconUrl);
+                    // itterate thru newly created array of data as of 3pm, and render the inforamtion in our forecast cards
+                    // high temp
+                    for (let i = 0; i < dates.length; i++) {
+                        var cardTemp = document.getElementsByClassName("forecast-temp");
+                        cardTemp[i].innerHTML = Math.round(dates[i].main.temp) + "&#8457;";
+                        // humidity
+                        var cardHumidity = document.getElementsByClassName("forecast-humidity");
+                        cardHumidity[i].innerHTML = dates[i].main.humidity + "%";
+                        // icons
+                        var cardIcon = document.getElementsByClassName("forecast-icon");
+                        var cardIconId = dates[i].weather[0].icon
+                        var cardIconUrl = "http://openweathermap.org/img/w/"
+                            + cardIconId
+                            + ".png";
+                        cardIcon[i].setAttribute("src", cardIconUrl);
+                    }
+                })
+            } else {
+                return;
             }
         })
 };

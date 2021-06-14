@@ -1,6 +1,7 @@
 // Start global variable
 var cityInputField = document.getElementById('city-input');
 var previousSearches = document.getElementById('history');
+var clearHistory = document.getElementById('clear');
 var cityDisplayed = document.getElementById('current-city-displayed');
 var searchField = document.getElementById('search-form');
 var currentCityTemp = document.getElementById('current-city-temp');
@@ -77,6 +78,16 @@ function searchHistory() {
 
 };
 // End render search history
+
+// Start clear history
+clearHistory.addEventListener('click', function () {
+    var accept = confirm('Search History will be cleared! Do you want to proceed?');
+    if (accept === true) {
+        localStorage.clear();
+        window.location.reload();
+    }
+});
+// End clear history
 
 // Start create dates and times across the page
 function displayDate() {

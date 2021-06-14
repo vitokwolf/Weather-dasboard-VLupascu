@@ -16,7 +16,7 @@
     <title>Weather Dashboard Lite</title>
 </head>
 
-<body>
+<body class="d-flex flex-column h-100">
     <!-- start header -->
     <header class="navbar custom-header navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
@@ -27,7 +27,7 @@
     <!-- end header -->
 
 
-    <main class="container-fluid">
+    <main class="container-fluid flex-shrink-0">
         <div class="row">
 
             <!-- Start Left side of the page, search form and history container -->
@@ -45,13 +45,18 @@
                     </form>
                 </div>
                 <!-- History container -->
-                <div id="history" class="card previous-searches mt-md-5">
+                <div class="card previous-searches mt-md-5">
                     <div class="card-header">
                         Search History
                     </div>
                     <br>
-                    <ul class="list-group list-group-flush">
+                    <ul id="history" class="list-group list-group-flush">
                     </ul>
+                    <div class="card-footer" id="clear">
+                        <button class="btn btn-outline-primary btn-lg btn-block city-btn">
+                            Clear Search History
+                        </button>
+                    </div>
                 </div>
             </div>
             <!-- End Left side of the page, search form and history container -->
@@ -69,7 +74,7 @@
                             Current Weather as of
                         </h4>
                         <span id="currentDay"></span>
-                        <div id="weather-condition">                            
+                        <div id="weather-condition">
                         </div>
                         <div>
                             <img id="weather-icon" src="">
@@ -190,13 +195,7 @@
             </div>
             <!-- End Right side of page: Searched city's today and future forecast -->
         </div>
-    </main>
-
-    <!-- Start Footer -->
-    <footer class="navbar  navbar-expand-lg navbar-dark bg-dark fixed-bottom">
-        <p>&copy 2021 VL</p>
-    </footer>
-    <!-- End Footer -->
+    </main>  
 
     <!-- dynamic changes links -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
